@@ -1,0 +1,57 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Mukta-Bold.ttf",
+      "sha1": "a928d8465eb1a78f4c442c7f94a231041ff5bcac"
+    },
+    {
+      "path": "src/assets/fonts/Mukta-ExtraBold.ttf",
+      "sha1": "c117015ba1a495862d382c8f0d2003bf22cc5fdb"
+    },
+    {
+      "path": "src/assets/fonts/Mukta-ExtraLight.ttf",
+      "sha1": "ffbfaf31a216ba0deb06b19e620b87fa6fc3f5d7"
+    },
+    {
+      "path": "src/assets/fonts/Mukta-Light.ttf",
+      "sha1": "717196ed664ecb1d0f2247fdc142aa332050f384"
+    },
+    {
+      "path": "src/assets/fonts/Mukta-Medium.ttf",
+      "sha1": "384b05376b3988a1a58c74c721b019f87e249b7f"
+    },
+    {
+      "path": "src/assets/fonts/Mukta-Regular.ttf",
+      "sha1": "c7e02ce2f3fcc9faa6fbe659f4d108777b2f66df"
+    },
+    {
+      "path": "src/assets/fonts/Mukta-SemiBold.ttf",
+      "sha1": "8e42a3c9d2c674a966382f85007409bb2740eaf9"
+    },
+    {
+      "path": "src/assets/fonts/Oswald-Bold.ttf",
+      "sha1": "6e78c90d65a6133d979daebc1255d2f560a97c79"
+    },
+    {
+      "path": "src/assets/fonts/Oswald-ExtraLight.ttf",
+      "sha1": "ac9323c6f3e5965bbeee4c57db7b78d8d67c9d1b"
+    },
+    {
+      "path": "src/assets/fonts/Oswald-Light.ttf",
+      "sha1": "18b6fe10677763e882985371a015bdc45ec2943c"
+    },
+    {
+      "path": "src/assets/fonts/Oswald-Medium.ttf",
+      "sha1": "70e75da33d777c839cf59cb042adf7fc5fa0235a"
+    },
+    {
+      "path": "src/assets/fonts/Oswald-Regular.ttf",
+      "sha1": "06aae8f5a28908ba8eca0d5bdc01cedc2a184a5f"
+    },
+    {
+      "path": "src/assets/fonts/Oswald-SemiBold.ttf",
+      "sha1": "10d1c319ab0685f35f3c9eb87a9524de0560345e"
+    }
+  ]
+}
