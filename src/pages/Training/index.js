@@ -1,17 +1,28 @@
-import { ScrollView, StyleSheet, Text, View,Image } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, View,Image,Animated } from 'react-native'
+import React, {useRef} from 'react'
 import {fontType} from '../../assets/theme';
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
 import SearchBar from '../../../components/searchBar'
 
 const Training = () => {
+  const navigation = useNavigation();
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const diffClampY = Animated.diffClamp(scrollY, 0, 142);
+  const recentY = diffClampY.interpolate({
+      inputRange: [0, 142],
+      outputRange: [0, -142],
+      extrapolate: 'clamp',
+    });
   return (
-    <ScrollView>
-        <View style={{padding: 30, backgroundColor: '#252727'}}>
+    <Animated.ScrollView
+    onScroll={Animated.event(
+      [{nativeEvent: {contentOffset: {y: scrollY}}}],
+      {useNativeDriver: true},
+    )}
+    contentContainerStyle={{paddingTop: 1}}>
+        <Animated.View style={{padding: 32, backgroundColor: '#252727',transform: [{translateY: recentY}]}}>
             <Text style={{color: '#F7F7F7',fontFamily:fontType['Oswald-Bold'], fontSize: 18}}>Training</Text>
-        </View>
-
-        <SearchBar/>
-
+        </Animated.View>
         <View style={events.container}>
             
             <View style={events.content}>
@@ -80,7 +91,7 @@ const Training = () => {
             
             
           </View>
-    </ScrollView>
+    </Animated.ScrollView>
     
   )
 }
@@ -91,7 +102,7 @@ const styles = StyleSheet.create({})
 const events = StyleSheet.create({
     container:{
       flexDirection: 'column',
-      marginVertical: 1,
+      marginVertical: 6,
       alignItems: 'center'
     },
     content: {
