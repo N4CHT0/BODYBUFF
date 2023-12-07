@@ -1,9 +1,8 @@
-import { ScrollView, StyleSheet, Text, View,Image,Animated } from 'react-native'
+import { ScrollView, StyleSheet, Text, View,Image,Animated, TouchableOpacity } from 'react-native'
 import React, {useRef} from 'react'
 import {fontType} from '../../assets/theme';
 import { useNavigation,useFocusEffect } from "@react-navigation/native";
-import SearchBar from '../../../components/searchBar'
-
+import { SearchNormal1,Category2 } from 'iconsax-react-native';
 const Training = () => {
   const navigation = useNavigation();
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -14,17 +13,23 @@ const Training = () => {
       extrapolate: 'clamp',
     });
   return (
-    <Animated.ScrollView
+    <View style={{flex: 1}}>
+          <Animated.ScrollView
     onScroll={Animated.event(
       [{nativeEvent: {contentOffset: {y: scrollY}}}],
       {useNativeDriver: true},
     )}
-    contentContainerStyle={{paddingTop: 1}}>
+    contentContainerStyle={{paddingTop: 0}}>
         <Animated.View style={{padding: 32, backgroundColor: '#252727',transform: [{translateY: recentY}]}}>
-            <Text style={{color: '#F7F7F7',fontFamily:fontType['Oswald-Bold'], fontSize: 18}}>Training</Text>
+            <Text style={{color: '#F7F7F7',fontFamily:fontType['Oswald-Bold'], fontSize: 22}}>BodyBuff</Text>
         </Animated.View>
+        <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+          <View style={{flexDirection: 'row',alignItems: 'center', gap: 20,padding: 16, marginVertical: 10, backgroundColor:'#E3E3E3',marginHorizontal: 10,borderRadius: 10}}>
+            <SearchNormal1 size="22" color="#000000"/>
+            <Text>Search</Text>
+          </View>
+        </TouchableOpacity>
         <View style={events.container}>
-            
             <View style={events.content}>
               <Image style={events.image} source={{
                 uri:
@@ -37,11 +42,8 @@ const Training = () => {
               }}
             ></Image>
             </View>
-            
-            
           </View>
           <View style={events.container}>
-            
             <View style={events.content}>
               <Image style={events.image} source={{
                 uri:
@@ -54,11 +56,8 @@ const Training = () => {
               }}
             ></Image>
             </View>
-            
-            
           </View>
           <View style={events.container}>
-            
             <View style={events.content}>
               <Image style={events.image} source={{
                 uri:
@@ -71,8 +70,6 @@ const Training = () => {
               }}
             ></Image>
             </View>
-            
-            
           </View>
           <View style={events.container}>
             
@@ -88,16 +85,15 @@ const Training = () => {
               }}
             ></Image>
             </View>
-            
-            
           </View>
     </Animated.ScrollView>
-    
+    <TouchableOpacity style={{padding: 20, position:'absolute', top: 630,right: 20, backgroundColor:'#252727',borderRadius: 20}} onPress={() => navigation.navigate("AddTraining")}>
+        <Category2 size="29"  color="#F7F7F7" variant='Bold'/>
+    </TouchableOpacity>
+    </View>
   )
 }
-
 export default Training
-
 const styles = StyleSheet.create({})
 const events = StyleSheet.create({
     container:{
