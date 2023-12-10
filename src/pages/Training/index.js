@@ -1,6 +1,6 @@
 import {useNavigation,useFocusEffect} from '@react-navigation/native';
-import React, {useRef,useState,useCallback} from 'react';
-import axios from 'axios'
+import React, {useRef,useState,useCallback,useEffect} from 'react';
+import firestore from '@react-native-firebase/firestore';
 import {ScrollView, StyleSheet, Text, View,ActivityIndicator, TouchableOpacity, Image,Animated} from 'react-native';
 import {fontType} from '../../assets/theme';
 import { SearchNormal1,Category2 } from 'iconsax-react-native';
@@ -17,30 +17,40 @@ const Training = () => {
   const [loading, setLoading] = useState(true);
   const [trainingData, setTrainingData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const getTrainingData = async () => {
-    try {
-      const response = await axios.get(
-        'https://6570c63f09586eff6641ed29.mockapi.io/bodybuff/training',
-      );
-      setTrainingData(response.data);
-      setLoading(false)
-    } catch (error) {
-        console.error(error);
-    }
-  };
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('item')
+      .onSnapshot(querySnapshot => {
+        const item = [];
+        querySnapshot.forEach(documentSnapshot => {
+          item.push({
+            ...documentSnapshot.data(),
+            id: documentSnapshot.id,
+          });
+        });
+        setTrainingData(item);
+        setLoading(false);
+      });
+    return () => subscriber();
+  }, []);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      getTrainingData()
+      firestore()
+        .collection('item')
+        .onSnapshot(querySnapshot => {
+          const item = [];
+          querySnapshot.forEach(documentSnapshot => {
+            item.push({
+              ...documentSnapshot.data(),
+              id: documentSnapshot.id,
+            });
+          });
+          setRefreshing(trainingData);
+        });
       setRefreshing(false);
     }, 1500);
   }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      getTrainingData();
-    }, [])
-  );
   return (
     <View style={{flex: 1}}>
           <Animated.ScrollView
