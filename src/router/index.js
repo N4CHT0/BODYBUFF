@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {  Home2, Avalanche, Profile2User } from 'iconsax-react-native';
 
 import React from 'react'
-import { Home,Profile,Training,Search,AddTraining } from '../pages';
+import { Home,Profile,Training,Search,AddTraining,DetailTraining,EditTraining } from '../pages';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const MainApp = () => {
@@ -52,6 +52,8 @@ const Router = () => {
       <Stack.Screen name="MainApp" component={MainApp} options={{ headerShown: false }} />
       <Stack.Screen name="Search" component={Search} options={{ headerShown: false }} />
       <Stack.Screen name="AddTraining" component={AddTraining} options={{ headerShown: false }} />
+      <Stack.Screen name="DetailTraining" component={DetailTraining} options={{ headerShown: false }} />
+      <Stack.Screen name="EditTraining" component={EditTraining} options={{ headerShown: false }} />
     </Stack.Navigator>
   )
 }

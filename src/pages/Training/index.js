@@ -1,17 +1,46 @@
-import { ScrollView, StyleSheet, Text, View,Image,Animated, TouchableOpacity } from 'react-native'
-import React, {useRef} from 'react'
+import {useNavigation,useFocusEffect} from '@react-navigation/native';
+import React, {useRef,useState,useCallback} from 'react';
+import axios from 'axios'
+import {ScrollView, StyleSheet, Text, View,ActivityIndicator, TouchableOpacity, Image,Animated} from 'react-native';
 import {fontType} from '../../assets/theme';
-import { useNavigation,useFocusEffect } from "@react-navigation/native";
 import { SearchNormal1,Category2 } from 'iconsax-react-native';
+import Data from '../../../components/Data';
 const Training = () => {
   const navigation = useNavigation();
   const scrollY = useRef(new Animated.Value(0)).current;
   const diffClampY = Animated.diffClamp(scrollY, 0, 142);
   const recentY = diffClampY.interpolate({
-      inputRange: [0, 142],
-      outputRange: [0, -142],
-      extrapolate: 'clamp',
-    });
+    inputRange: [0, 142],
+    outputRange: [0, -142],
+    extrapolate: 'clamp',
+  });
+  const [loading, setLoading] = useState(true);
+  const [trainingData, setTrainingData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const getTrainingData = async () => {
+    try {
+      const response = await axios.get(
+        'https://6570c63f09586eff6641ed29.mockapi.io/bodybuff/training',
+      );
+      setTrainingData(response.data);
+      setLoading(false)
+    } catch (error) {
+        console.error(error);
+    }
+  };
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      getTrainingData()
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getTrainingData();
+    }, [])
+  );
   return (
     <View style={{flex: 1}}>
           <Animated.ScrollView
@@ -29,61 +58,13 @@ const Training = () => {
             <Text>Search</Text>
           </View>
         </TouchableOpacity>
-        <View style={events.container}>
-            <View style={events.content}>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/t2yYrC79ODKIMcn4RhYvUxqAVn4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/TheBarn3photobyAudreyHallHR-d5b7fd883c904a15b5d0c3b67a63e2df.jpeg',
-              }}
-            ></Image>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/UHWe2gnaQW7u8q01iO2Mk4ZKtLk=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/NVGRTZ2_GB_S13_283_Gym-0f8aac0453d84363b1973c7568d16d34.jpeg',
-              }}
-            ></Image>
-            </View>
-          </View>
-          <View style={events.container}>
-            <View style={events.content}>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/JefdJpC0sQLfww-kWZfSkkYl_c8=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/LeanneFordShedYogaStudioWEB--c876390f6ff1443e8577946b0cd4bc89.jpg',
-              }}
-            ></Image>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/mzYQ2e8yhfmvphcwRfDkfLqxvDQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Interior-Impressions-Woodbury-MN-Amys-Abode-Workout-Room-Floral-Green-Wallpaper-Treadmill-523d6f3193c344359a49a3d805cb9b2d.jpg',
-              }}
-            ></Image>
-            </View>
-          </View>
-          <View style={events.container}>
-            <View style={events.content}>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/qIk0cYNshizS4VbNnBqQhP-kFKY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/JessicaLagrangeInteriors_creditTonySoluri-c5e4abfcb4444381b516821381b72ea0.jpeg',
-              }}
-            ></Image>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/wXsex9R98W0CxQ_WX1Txb6-LaQs=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/509ef46d-6440-25fa-c995-20dc72625d33-4493378390784da093bb4619645547e3.jpg',
-              }}
-            ></Image>
-            </View>
-          </View>
-          <View style={events.container}>
-            
-            <View style={events.content}>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/pcmhj8XKCXPXoS6Rfmt6w_VPkeM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Geddes_Gym_over_III_V.232573-bc9063f044224e71b0f78eb339db3d07.jpeg',
-              }}
-            ></Image>
-              <Image style={events.image} source={{
-                uri:
-                  'https://www.thespruce.com/thmb/WxXzBocohXOXEg5hCLKfN1sHgH4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Geddes_Gym_over_II_32558-f12720a277c045fa8b0b13ec6b134070.jpeg',
-              }}
-            ></Image>
+        <View style={styles.container}>    
+            <View style={styles.content}>
+              {loading ? (
+                <ActivityIndicator size={'large'} color={'black'}/>
+              ) : (
+                trainingData.map((item, index) => <Data item={item} key={index}/>)
+              )}
             </View>
           </View>
     </Animated.ScrollView>
@@ -94,7 +75,20 @@ const Training = () => {
   )
 }
 export default Training
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container:{
+    flexDirection: 'column',
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  content: {
+    flexDirection: 'row',
+    flexWrap:'wrap',
+    justifyContent:'center'
+  }
+})
 const events = StyleSheet.create({
     container:{
       flexDirection: 'column',
