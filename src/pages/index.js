@@ -5,5 +5,8 @@ import EditTraining from './EditTraining'
 import DetailTraining from './DetailTraining'
 import Training from './Training'
 import Search from './Search'
+import Register from './Register'
+import Login from './Login'
+import Splash from './Splash'
 
-export{Home,Profile,Training,Search,AddTraining,EditTraining,DetailTraining}
+export{Home,Profile,Training,Search,AddTraining,Splash,Login,Register,EditTraining,DetailTraining}
